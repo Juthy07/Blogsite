@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="w-screen max-h-80 bg-yellow-400 p-4 pl-6 text-4xl font-bold font-serif">Blogsite</div>
+        <div class="w-screen h-screen flex justify-center items-center font-serif bg-yellow-100">
+            <div class="p-8 border shadow-md bg-yellow-50">
+                <h1 class="text-2xl pb-2 border-b mb-5">Login</h1>
+                <div class="">
+                    <form>
+                        <div class="p-2">
+                            <input
+                                class="border p-2"
+                                id="login-email"
+                                type="text"
+                                name="email"
+                                placeholder="email"
+                            /><br />
+                        </div>
+                        <div class="p-2">
+                            <input
+                                class="border p-2"
+                                id="login-username"
+                                type="text"
+                                name="username"
+                                placeholder="username"
+                            /><br />
+                        </div>
+                        <div class="p-2">
+                            <input
+                                class="border p-2"
+                                id="login-password"
+                                type="password"
+                                name="password"
+                                placeholder="password"
+                            /><br />
+                        </div>
+                        <div class="p-2">
+                            <button
+                                type="button"
+                                class="w-full border p-2 shadow-md bg-yellow-400 text-xl hover:shadow-xl"
+                                onclick="login()"
+                            >
+                                Login
+                            </button>
+                        </div>
+                        <div class="p-2 pl-3">
+                            Not a user? <a class="hover:text-yellow-400 shadow-xl" href="/register">Register here!</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            function login() {
+                const email = document.getElementById('login-email').value
+                const username = document.getElementById('login-username').value
+                const password = document.getElementById('login-password').value
+                const xmlHttp = new XMLHttpRequest()
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.status === 200 && xmlHttp.readyState == 4) {
+                        console.log(this.response)
+                        const { error, success, message } = JSON.parse(this.response)
+
+                        if (error) alert(JSON.stringify(error))
+                        else {
+                            alert(message)
+                            window.location.href = '/'
+                        }
+                    }
+                }
+                xmlHttp.open('POST', 'http://localhost:5000/api/login', true)
+                xmlHttp.setRequestHeader('Content-Type', 'application/json')
+                xmlHttp.send(JSON.stringify({ email, username, password }))
+            }
+        </script>
+    </body>
+</html>

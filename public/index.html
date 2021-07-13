@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title></title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    </head>
+    <body class="bg-yellow-50">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">
+                You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to
+                improve your experience.
+            </p>
+        <![endif]-->
+        <div id="header" class="flex flex-row">
+            <div
+                class="
+                    w-max
+                    max-h-80
+                    bg-yellow-400
+                    p-4
+                    pl-6
+                    text-4xl
+                    font-bold font-serif
+                    flex flex-row flex-grow
+                    justify-between
+                "
+            >
+                <div>Blogsite</div>
+                <div class="text-base flex items-center gap-2">
+                    <button class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl" type="button">
+                        Create Blog
+                    </button>
+                    <button
+                        class="p-2 text-center bg-red-500 text-white hover:shadow-xl"
+                        type="button"
+                        onclick="logout()"
+                    >
+                        Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="body">
+            <div id="blogContainer" class="flex flex-col flex items-center pt-10 gap-6">
+                <div id="blog" class="w-8/12 p-8 border shadow-md bg-yellow-200">
+                    <div class="flex justify-center text-2xl">Blog</div>
+                    <div id="blogDescription" class="flex flex-row gap-3 flex justify-center pt-4"></div>
+                    <div class="-mb-5 -ml-4 flex flex-row justify-between flex items-center">
+                        <div class="text-xs">Date created : dd/mm/yyyy</div>
+                        <div>
+                            <button
+                                class="
+                                    p-2
+                                    text-center text-xs
+                                    bg-green-500
+                                    text-white
+                                    hover:shadow-xl
+                                    w-50
+                                    px-4
+                                    rounded-md
+                                "
+                                type="button"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                class="p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md"
+                                type="button"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="blog" class="w-8/12 p-8 border shadow-md bg-yellow-200">
+                    <div class="flex justify-center text-2xl">Blog</div>
+                    <div id="blogDescription" class="flex flex-row gap-3 flex justify-center pt-4"></div>
+                    <div class="-mb-5 -ml-4 flex flex-row justify-between flex items-center">
+                        <div class="text-xs">Date created : dd/mm/yyyy</div>
+                        <div>
+                            <button
+                                class="
+                                    p-2
+                                    text-center text-xs
+                                    bg-green-500
+                                    text-white
+                                    hover:shadow-xl
+                                    w-50
+                                    px-4
+                                    rounded-md
+                                "
+                                type="button"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                class="p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md"
+                                type="button"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="blog" class="w-8/12 p-8 border shadow-md bg-yellow-200">
+                    <div class="flex justify-center text-2xl">Blog</div>
+                    <div id="blogDescription" class="flex flex-row gap-3 flex justify-center pt-4"></div>
+                    <div class="-mb-5 -ml-4 flex flex-row justify-between flex items-center">
+                        <div class="text-xs">Date created : dd/mm/yyyy</div>
+                        <div>
+                            <button
+                                class="
+                                    p-2
+                                    text-center text-xs
+                                    bg-green-500
+                                    text-white
+                                    hover:shadow-xl
+                                    w-50
+                                    px-4
+                                    rounded-md
+                                "
+                                type="button"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                class="p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md"
+                                type="button"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function logout() {
+                console.log('Logout Here.')
+                const xmlHttp = new XMLHttpRequest()
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.status === 200 && xmlHttp.readyState == 4) {
+                        console.log(this.response)
+                        const { error, success, message } = JSON.parse(this.response)
+
+                        if (error) alert(JSON.stringify(error))
+                        else {
+                            alert(message)
+                            window.location.href = '/login'
+                        }
+                    }
+                }
+                xmlHttp.open('POST', 'http://localhost:5000/api/logout', true)
+                xmlHttp.setRequestHeader('Content-Type', 'application/json')
+                xmlHttp.send()
+            }
+        </script>
+    </body>
+</html>
