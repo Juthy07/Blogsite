@@ -1,4 +1,13 @@
 -- CreateTable
+CREATE TABLE "user" (
+    "email" VARCHAR NOT NULL,
+    "username" VARCHAR NOT NULL,
+    "password" VARCHAR NOT NULL,
+
+    PRIMARY KEY ("email")
+);
+
+-- CreateTable
 CREATE TABLE "session" (
     "sid" VARCHAR NOT NULL,
     "sess" JSON NOT NULL,
