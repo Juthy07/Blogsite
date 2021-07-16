@@ -7,15 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   userID   Int    @id @default(autoincrement())
   email    String @db.VarChar
   username String @db.VarChar
   password String @db.VarChar
-  blog     blog[]
+  Blog     Blog[]
 }
 
-model session {
+model Session {
   sid    String   @id @db.VarChar
   sess   Json     @db.Json
   expire DateTime @db.Timestamp(6)
@@ -24,11 +24,26 @@ model session {
   @@index([expire], name: "IDX_session_expire")
 }
 
-model blog {
-  blogid      Int      @id @default(autoincrement())
-  userID      Int      @db.Integer
+model Blog {
+  blogID      Int      @id @default(autoincrement())
+  userFK      Int      @db.Integer
   blogtitle   String   @db.VarChar
   blogcontent String   @db.VarChar
   datecreated DateTime @db.Date
-  user        user     @relation(fields: [userID], references: [userID])
+  User        User     @relation(fields: [userFK], references: [userID])
 }
+
+
+// model Post {
+//   id       Int     @default(autoincrement()) @id
+//   userID   Int?
+//   title    String?
+//   content  String
+//   User     User?   @relation(fields: [userID], references: [id])
+// }
+
+// model User {
+//   id   Int     @default(autoincrement()) @id
+//   name String?
+//   Post Post[]
+// }

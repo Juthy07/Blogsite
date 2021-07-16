@@ -49,9 +49,4 @@ module.exports = [
         username: 'rknoton8',
         password: 'LyDvpTU',
     },
-    {
-        email: 'sgenever9@geocities.jp',
-        username: 'ltregensoe9',
-        password: 'iZL5zUm9',
-    },
 ]

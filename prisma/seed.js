@@ -4,13 +4,26 @@ const { blogSeed, userSeed } = require('./seed-data')
 const prisma = new PrismaClient()
 async function seeder() {
     try {
-        for (let blog of blogSeed) {
-            console.log(blog)
-            await prisma.user.create({ data: blog })
+        for (let i = 0; i < userSeed.length; i++) {
+            const userData = userSeed[i]
+            const blogData = blogSeed[i]
+            await prisma.user.create({
+                data: {
+                    ...userData,
+                    Blog: {
+                        create: blogData,
+                    },
+                },
+                include: {
+                    Blog: true,
+                },
+            })
         }
-        // for (let user of userSeed) {
-        //     await prisma.user.create({ data: user })
+        // for (let blog of blogSeed) {
+        //     console.log(blog)
+        //     await prisma.blog.create({ data: blog })
         // }
+        console.log('Seed ended')
     } catch (e) {
         console.error(e)
     } finally {
