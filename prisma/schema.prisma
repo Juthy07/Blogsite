@@ -8,9 +8,11 @@ datasource db {
 }
 
 model user {
-  email    String @id @db.VarChar
+  userID   Int    @id @default(autoincrement())
+  email    String @db.VarChar
   username String @db.VarChar
   password String @db.VarChar
+  blog     blog[]
 }
 
 model session {
@@ -20,4 +22,13 @@ model session {
   userid String[] @db.VarChar
 
   @@index([expire], name: "IDX_session_expire")
+}
+
+model blog {
+  blogid      Int      @id @default(autoincrement())
+  userID      Int      @db.Integer
+  blogtitle   String   @db.VarChar
+  blogcontent String   @db.VarChar
+  datecreated DateTime @db.Date
+  user        user     @relation(fields: [userID], references: [userID])
 }
