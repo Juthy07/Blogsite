@@ -1,3 +1,7 @@
+// References
+// 1. https://www.prisma.io/docs/guides/general-guides/database-workflows/foreign-keys/postgresql
+// 2. https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries/
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -32,18 +36,3 @@ model Blog {
   datecreated DateTime @db.Date
   User        User     @relation(fields: [userFK], references: [userID])
 }
-
-
-// model Post {
-//   id       Int     @default(autoincrement()) @id
-//   userID   Int?
-//   title    String?
-//   content  String
-//   User     User?   @relation(fields: [userID], references: [id])
-// }
-
-// model User {
-//   id   Int     @default(autoincrement()) @id
-//   name String?
-//   Post Post[]
-// }
