@@ -36,7 +36,7 @@
                 <div>Blogsite</div>
                 <div class="text-base flex items-center gap-2">
                     <button class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl" type="button">
-                        Create Blog
+                        <a href="/createBlog">Create Blog</a>
                     </button>
                     <button
                         class="p-2 text-center bg-red-500 text-white hover:shadow-xl"
@@ -48,111 +48,93 @@
                 </div>
             </div>
         </div>
-        <div id="body">
-            <div id="blogContainer" class="flex flex-col flex items-center pt-10 gap-6">
-                <div id="blog" class="w-8/12 p-8 border shadow-md bg-yellow-200">
-                    <div class="flex justify-center text-2xl">Song of Solomon 7:12</div>
-                    <div id="blogDescription" class="flex flex-row gap-3 flex justify-center pt-4">
-                        "Let us go early to the vineyards to see if the vines have budded, if their blossoms have
-                        opened, and if the pomegranates are in bloom— there I will give you my love."
-                    </div>
-                    <div class="-mb-5 -ml-4 flex flex-row justify-between flex items-center">
-                        <div class="text-xs pt-5 pl-4">Date created : dd/mm/yyyy</div>
-                        <div>
-                            <button
-                                class="
-                                    p-2
-                                    text-center text-xs
-                                    bg-green-500
-                                    text-white
-                                    hover:shadow-xl
-                                    w-50
-                                    px-4
-                                    rounded-md
-                                "
-                                type="button"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                class="p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md"
-                                type="button"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div id="blog" class="w-8/12 p-8 border shadow-md bg-yellow-200">
-                    <div class="flex justify-center text-2xl">Song of Solomon 7:12</div>
-                    <div id="blogDescription" class="flex flex-row gap-3 flex justify-center pt-4">
-                        "Let us go early to the vineyards to see if the vines have budded, if their blossoms have
-                        opened, and if the pomegranates are in bloom— there I will give you my love."
-                    </div>
-                    <div class="-mb-5 -ml-4 flex flex-row justify-between flex items-center">
-                        <div class="text-xs pt-5 pl-4">Date created : dd/mm/yyyy</div>
-                        <div>
-                            <button
-                                class="
-                                    p-2
-                                    text-center text-xs
-                                    bg-green-500
-                                    text-white
-                                    hover:shadow-xl
-                                    w-50
-                                    px-4
-                                    rounded-md
-                                "
-                                type="button"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                class="p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md"
-                                type="button"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div id="blog" class="w-8/12 p-8 border shadow-md bg-yellow-200">
-                    <div class="flex justify-center text-2xl">Song of Solomon 7:12</div>
-                    <div id="blogDescription" class="flex flex-row gap-3 flex justify-center pt-4">
-                        "Let us go early to the vineyards to see if the vines have budded, if their blossoms have
-                        opened, and if the pomegranates are in bloom— there I will give you my love."
-                    </div>
-                    <div class="-mb-5 -ml-4 flex flex-row justify-between flex items-center">
-                        <div class="text-xs pt-5 pl-4">Date created : dd/mm/yyyy</div>
-                        <div>
-                            <button
-                                class="
-                                    p-2
-                                    text-center text-xs
-                                    bg-green-500
-                                    text-white
-                                    hover:shadow-xl
-                                    w-50
-                                    px-4
-                                    rounded-md
-                                "
-                                type="button"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                class="p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md"
-                                type="button"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl" type="button">Load More</button>
-        </div>
+        <h1>Welcome <span id="username"></span>!</h1>
+        <div id="blog" class="flex flex-col flex items-center pt-10 gap-6"></div>
         <script>
+            const xmlHttp = new XMLHttpRequest()
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
+                    console.log(this.response)
+                    const { error, success, data, count, currentUser, currentUserName } = JSON.parse(this.response)
+                    console.log('Session user' + currentUser)
+
+                    function updateUserName(name) {
+                        const username = document.getElementById('username')
+                        username.textContent = name
+                    }
+                    console.log('Current:::' + currentUserName)
+                    updateUserName(currentUserName)
+                    if (error) alert(JSON.stringify(error))
+                    else {
+                        let i = 0
+                        for (i = 0; i <= count + 1; i++) {
+                            blogMaker(data, i)
+                            //console.log('Data' + data[i].userFK)
+
+                            function blogMaker(data, i) {
+                                //Main div of Blog
+                                const main = document.createElement('div')
+                                main.className = 'w-8/12 p-8 border shadow-md bg-yellow-200'
+
+                                //Blog title
+                                const title = document.createElement('div')
+                                title.innerHTML = data[i].blogtitle
+                                title.className = 'flex justify-center text-2xl'
+
+                                //Blog content
+                                const content = document.createElement('div')
+                                content.innerHTML = data[i].blogcontent
+                                content.className = 'flex flex-row gap-3 flex justify-center pt-4'
+
+                                //Blog footer
+                                const footer = document.createElement('div')
+                                footer.className = '-mb-5 -ml-4 flex flex-row justify-between flex items-center'
+
+                                //Blog's creation date
+                                const date = document.createElement('div')
+                                date.innerHTML = 'Date created : ' + data[i].datecreated
+                                date.className = 'text-xs pt-5 pl-4'
+
+                                //Button Div
+                                const buttonDiv = document.createElement('div')
+
+                                //Edit button
+                                const editButton = document.createElement('button')
+                                editButton.type = 'button'
+                                editButton.className =
+                                    'p-2 text-center text-xs bg-green-500 text-white hover:shadow-xl w-50 px-4 rounded-md'
+                                editButton.innerHTML = 'Edit'
+
+                                //Delete button
+                                const deleteButton = document.createElement('button')
+                                deleteButton.type = 'button'
+                                deleteButton.className =
+                                    'p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md'
+                                deleteButton.innerHTML = 'Delete'
+
+                                //Button appearing and disappering
+                                if (currentUser == data[i].userFK) {
+                                    buttonDiv.appendChild(editButton)
+                                    buttonDiv.appendChild(deleteButton)
+                                }
+
+                                footer.appendChild(date)
+                                footer.appendChild(buttonDiv)
+
+                                main.appendChild(title)
+                                main.appendChild(content)
+                                main.appendChild(footer)
+
+                                document.getElementById('blog').appendChild(main)
+                            }
+                        }
+                    }
+                }
+            }
+            xmlHttp.open('GET', 'http://localhost:5000/api/blog')
+            xmlHttp.setRequestHeader('Content-Type', 'application/json')
+            xmlHttp.send()
+
             function logout() {
                 console.log('Logout Here.')
                 const xmlHttp = new XMLHttpRequest()

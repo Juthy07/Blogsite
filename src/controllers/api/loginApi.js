@@ -7,15 +7,21 @@ const prisma = getPrisma()
 async function logging(req, res) {
     const body = req.body
     const { email, username, password } = body
+
     const error = {}
 
     if (validEmail(email, error) && validUsername(username, error) && validPassword(password, error)) {
         try {
-            await userLogin({ email, username, password })
-            res.json({
-                success: true,
-                message: `User Logged In.`,
-            })
+            const user = await userLogin({ email, username, password })
+            debugger
+            if (user) {
+                req.session.user = user
+                res.json({
+                    success: true,
+                    message: `User Logged In.`,
+                })
+            }
+            throw new Error('User not valid')
         } catch (e) {
             console.log(e)
             res.json({
@@ -28,16 +34,15 @@ async function logging(req, res) {
     }
 
     async function userLogin({ email, username, password }) {
-        const validUser = await prisma.register.findFirst({
+        const validUser = await prisma.user.findFirst({
             where: {
                 email,
                 username,
                 password,
             },
         })
-        if (!validUser) {
-            res.json({ error: 'User invalid.' })
-        }
+
+        return validUser
     }
 }
 

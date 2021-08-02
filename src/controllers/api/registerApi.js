@@ -36,11 +36,12 @@ async function registration(req, res) {
 }
 
 async function registerUser({ email, username, password }) {
-    const hasRegisteredUser = await prisma.register.findFirst({ where: { email } })
+    debugger
+    const hasRegisteredUser = await prisma.user.findFirst({ where: { email } })
     if (hasRegisteredUser) {
         res.json({ error: 'User already exists.' })
     }
-    await prisma.register.create({ data: { email, username, password } })
+    await prisma.user.create({ data: { email, username, password } })
 }
 
 module.exports = registration

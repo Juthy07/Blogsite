@@ -17,15 +17,19 @@ model User {
   username String @db.VarChar
   password String @db.VarChar
   Blog     Blog[]
+
+  
+  @@map(name: "user")
 }
 
 model Session {
   sid    String   @id @db.VarChar
   sess   Json     @db.Json
   expire DateTime @db.Timestamp(6)
-  userid String[] @db.VarChar
+  
 
   @@index([expire], name: "IDX_session_expire")
+   @@map(name: "session")
 }
 
 model Blog {
@@ -35,4 +39,5 @@ model Blog {
   blogcontent String   @db.VarChar
   datecreated DateTime @db.Date
   User        User     @relation(fields: [userFK], references: [userID])
+   @@map(name: "blog")
 }
