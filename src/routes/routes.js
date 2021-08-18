@@ -3,13 +3,17 @@ const LOGIN_API_ROUTE = `/api/login`
 const LOGOUT_API_ROUTE = `/api/logout`
 const REGISTER_API_ROUTE = `/api/register`
 const GETBLOG_API_ROUTE = `/api/blog`
+const CREATEBLOG_API_ROUTE = '/api/createblog'
+const EDITBLOG_API_ROUTE = '/api/editblog'
+const DELETEBLOG_API_ROUTE = '/api/deleteblog'
 
 // Web routes
 const HOME_PAGE_ROUTE = '/'
 const LOGIN_PAGE_ROUTE = '/login'
 const LOGOUT_PAGE_ROUTE = '/logout'
 const REGISTER_PAGE_ROUTE = '/register'
-const CREATE_BLOG_ROUTE = '/createBlog'
+const CREATE_BLOG_ROUTE = '/createblog'
+const EDIT_BLOG_ROUTE = '/editblog'
 
 const ERROR_PAGE_ROUTE = '/error'
 
@@ -19,6 +23,9 @@ module.exports = {
         LOGOUT_API_ROUTE,
         REGISTER_API_ROUTE,
         GETBLOG_API_ROUTE,
+        CREATEBLOG_API_ROUTE,
+        EDITBLOG_API_ROUTE,
+        DELETEBLOG_API_ROUTE,
     },
     webRoute: {
         HOME_PAGE_ROUTE,
@@ -27,5 +34,6 @@ module.exports = {
         REGISTER_PAGE_ROUTE,
         ERROR_PAGE_ROUTE,
         CREATE_BLOG_ROUTE,
+        EDIT_BLOG_ROUTE,
     },
 }

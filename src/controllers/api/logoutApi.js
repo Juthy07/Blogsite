@@ -22,7 +22,7 @@ async function logout(req, res) {
 }
 
 function deleteSession(sid) {
-    console.log('Session id here!!! : ' + sid)
+    // console.log('Session id here!!! : ' + sid)
 
     return prisma.session.delete({
         where: {

@@ -5,9 +5,11 @@
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
     </head>
     <body>
@@ -24,48 +26,73 @@
             <div class="p-2 flex flex-row gap-3 mt-3">
                 <button
                     type="button"
+                    id="editButton"
                     class="w-full border p-2 px-4 rounded-md shadow-md bg-green-600 text-xl text-white hover:shadow-xl"
-                    onclick="createBlog()"
+                    onclick="editBlog()"
                 >
                     Save
                 </button>
                 <button
                     type="button"
                     class="w-full border p-2 px-4 rounded-md shadow-md bg-red-600 text-xl text-white hover:shadow-xl"
-                    onclick="cancel()"
                 >
                     Cancel
                 </button>
             </div>
         </div>
-
         <script>
-            function createBlog() {
-                const blogtitle = document.getElementById('blogtitle').value
-                const blogcontent = document.getElementById('blogcontent').value
-                //const datecreated = new Date();
-                //console.log('Blog Title  ' + blogtitle + '/n' + 'Blog Content : ' + blogcontent + '/n')
+            const params = new URLSearchParams(document.location.search.substring(1))
+            const id = params.get('id')
+            console.log(id)
+
+            function handleError(error) {
+                alert('Something went wrong.\n Error:', error)
+            }
+
+            function handleData(data) {
+                const blogData = data
+                console.log(blogData)
+
+                document.getElementById('blogtitle').value = blogData.blogtitle
+                document.getElementById('blogcontent').value = blogData.blogcontent
+            }
+
+            function editBlog() {
+                const title = document.getElementById('blogtitle').value
+                const content = document.getElementById('blogcontent').value
+                console.log('title: ' + title)
+
                 const xmlHttp = new XMLHttpRequest()
                 xmlHttp.onreadystatechange = function () {
                     if (xmlHttp.status === 200 && xmlHttp.readyState == 4) {
-                        console.log(this.response)
-                        const { error, success, message } = JSON.parse(this.response)
+                        const { error, message } = JSON.parse(this.response)
 
-                        if (error) alert(JSON.stringify(error))
+                        if (error) return handleError(error)
                         else {
                             alert(message)
                             window.location.href = '/'
                         }
                     }
                 }
-                xmlHttp.open('POST', 'http://localhost:5000/api/createblog', true)
+
+                xmlHttp.open('POST', 'http://localhost:5000/api/editblog')
                 xmlHttp.setRequestHeader('Content-Type', 'application/json')
-                xmlHttp.send(JSON.stringify({ blogtitle, blogcontent }))
+                xmlHttp.send(JSON.stringify({ id, title, content }))
             }
 
-            function cancel() {
-                window.location.href = '/'
+            const xmlHttp = new XMLHttpRequest()
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.status === 200 && xmlHttp.readyState == 4) {
+                    const { data, error } = JSON.parse(this.response)
+
+                    if (error) return handleError(error)
+                    else handleData(data)
+                }
             }
+
+            xmlHttp.open('POST', 'http://localhost:5000/api/editblog')
+            xmlHttp.setRequestHeader('Content-Type', 'application/json')
+            xmlHttp.send(JSON.stringify({ id }))
         </script>
     </body>
 </html>

@@ -1,11 +1,11 @@
 const { getTemplate } = require('../../util/util')
 
-function createBlogPage(req, res) {
+function editBlogPage(req, res) {
     //console.log(req)
-    const page = getTemplate('createBlog.html')
+    const page = getTemplate('editBlog.html')
 
     res.setHeader('Content-Type', 'text/html')
     res.end(page)
 }
 
-module.exports = createBlogPage
+module.exports = editBlogPage

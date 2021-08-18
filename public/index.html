@@ -31,9 +31,25 @@
                     font-bold font-serif
                     flex flex-row flex-grow
                     justify-between
+                    items-baseline
                 "
             >
                 <div>Blogsite</div>
+                <span
+                    class="
+                        text-base
+                        flex
+                        text-center text-yellow-700
+                        justify-center
+                        mt-6
+                        text-2xl
+                        font-serif
+                        -mb-3
+                        font-semibold
+                    "
+                    id="username"
+                >
+                </span>
                 <div class="text-base flex items-center gap-2">
                     <button class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl" type="button">
                         <a href="/createBlog">Create Blog</a>
@@ -48,93 +64,155 @@
                 </div>
             </div>
         </div>
-        <h1>Welcome <span id="username"></span>!</h1>
-        <div id="blog" class="flex flex-col flex items-center pt-10 gap-6"></div>
+        <div id="blog" class="flex flex-col flex items-center pt-10 gap-6 mb-16"></div>
+
         <script>
+            //Function for Error Handling
+            function handleError(error) {
+                alert('Something went wrong.\n Error:', error)
+            }
+
+            //Function to show 'Welcome username!' on Home page
+            function updateUserName(name) {
+                const username = document.getElementById('username')
+                username.textContent = 'Welcome  ' + name + '!'
+            }
+
+            //Function for handling data i.e to show blogs created by users
+            function handlerData(data) {
+                const { blog, user } = data
+                //console.log(user)
+                console.log(blog)
+                updateUserName(user.username)
+                for (let i = 0; i < blog.length; i++) {
+                    blogMaker(blog[i], user.userID)
+                }
+            }
+
+            //Function for creating structure of each blog
+            function blogMaker(blog, currentUserID) {
+                //Main div of Blog
+                const main = document.createElement('div')
+                main.className = 'w-8/12 p-8 border shadow-md bg-yellow-200 font-serif leading-8 break-words'
+
+                //Blog title
+                const title = document.createElement('div')
+                title.innerHTML = blog.blogtitle
+                title.className = 'flex justify-center text-yellow-600 text-3xl font-semibold italic'
+
+                //Blog content
+                const content = document.createElement('div')
+                content.innerHTML = blog.blogcontent
+                content.className = 'flex flex-row gap-3 flex justify-center pt-4 font-medium text-lg'
+
+                //Blog footer
+                const footer = document.createElement('div')
+                footer.className = '-mb-5 -ml-4 flex flex-row justify-between flex items-center'
+
+                //Blog Detail
+                const detail = document.createElement('div')
+                detail.className = 'mb-3 mt-3 ml-5 justify-center flex-col pb-0 text-yellow-700 italic'
+
+                //Blog created by
+                const createdBy = document.createElement('div')
+                createdBy.className = '-mb-2'
+
+                //Blog date created
+                const date = document.createElement('div')
+
+                Blogdate = blog.datecreated.split('-')
+
+                const year = Blogdate[0]
+                const month = Blogdate[1]
+                const day = Blogdate[2].slice(0, 2)
+                const finaldate = day + ' - ' + month + ' - ' + year
+
+                date.innerHTML = 'Date created : ' + finaldate
+
+                createdBy.innerHTML = 'By : ' + blog.username
+
+                //Button Div
+                const buttonDiv = document.createElement('div')
+
+                //Edit button
+                const editButton = document.createElement('button')
+                editButton.type = 'button'
+                editButton.className =
+                    'p-2 text-center text-xs bg-green-500 text-white hover:shadow-xl w-50 px-4 rounded-md text-base mr-2 hover:bg-green-700'
+                editButton.innerHTML = 'Edit'
+                editButton.onclick = function () {
+                    editBlog(blog)
+                }
+
+                //Delete button
+                const deleteButton = document.createElement('button')
+                deleteButton.type = 'button'
+                deleteButton.className =
+                    'p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md text-base hover:bg-red-700'
+                deleteButton.innerHTML = 'Delete'
+                deleteButton.onclick = function () {
+                    deleteBlog(blog)
+                }
+
+                //Button appearing and disappering
+                if (currentUserID == blog.userFK) {
+                    buttonDiv.appendChild(editButton)
+                    buttonDiv.appendChild(deleteButton)
+                }
+
+                detail.appendChild(createdBy)
+                detail.appendChild(date)
+
+                footer.appendChild(detail)
+                footer.appendChild(buttonDiv)
+
+                main.appendChild(title)
+                main.appendChild(content)
+                main.appendChild(footer)
+
+                document.getElementById('blog').appendChild(main)
+            }
+
             const xmlHttp = new XMLHttpRequest()
             xmlHttp.onreadystatechange = function () {
                 if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-                    console.log(this.response)
-                    const { error, success, data, count, currentUser, currentUserName } = JSON.parse(this.response)
-                    console.log('Session user' + currentUser)
-
-                    function updateUserName(name) {
-                        const username = document.getElementById('username')
-                        username.textContent = name
-                    }
-                    console.log('Current:::' + currentUserName)
-                    updateUserName(currentUserName)
-                    if (error) alert(JSON.stringify(error))
-                    else {
-                        let i = 0
-                        for (i = 0; i <= count + 1; i++) {
-                            blogMaker(data, i)
-                            //console.log('Data' + data[i].userFK)
-
-                            function blogMaker(data, i) {
-                                //Main div of Blog
-                                const main = document.createElement('div')
-                                main.className = 'w-8/12 p-8 border shadow-md bg-yellow-200'
-
-                                //Blog title
-                                const title = document.createElement('div')
-                                title.innerHTML = data[i].blogtitle
-                                title.className = 'flex justify-center text-2xl'
-
-                                //Blog content
-                                const content = document.createElement('div')
-                                content.innerHTML = data[i].blogcontent
-                                content.className = 'flex flex-row gap-3 flex justify-center pt-4'
-
-                                //Blog footer
-                                const footer = document.createElement('div')
-                                footer.className = '-mb-5 -ml-4 flex flex-row justify-between flex items-center'
-
-                                //Blog's creation date
-                                const date = document.createElement('div')
-                                date.innerHTML = 'Date created : ' + data[i].datecreated
-                                date.className = 'text-xs pt-5 pl-4'
-
-                                //Button Div
-                                const buttonDiv = document.createElement('div')
-
-                                //Edit button
-                                const editButton = document.createElement('button')
-                                editButton.type = 'button'
-                                editButton.className =
-                                    'p-2 text-center text-xs bg-green-500 text-white hover:shadow-xl w-50 px-4 rounded-md'
-                                editButton.innerHTML = 'Edit'
-
-                                //Delete button
-                                const deleteButton = document.createElement('button')
-                                deleteButton.type = 'button'
-                                deleteButton.className =
-                                    'p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md'
-                                deleteButton.innerHTML = 'Delete'
-
-                                //Button appearing and disappering
-                                if (currentUser == data[i].userFK) {
-                                    buttonDiv.appendChild(editButton)
-                                    buttonDiv.appendChild(deleteButton)
-                                }
-
-                                footer.appendChild(date)
-                                footer.appendChild(buttonDiv)
-
-                                main.appendChild(title)
-                                main.appendChild(content)
-                                main.appendChild(footer)
-
-                                document.getElementById('blog').appendChild(main)
-                            }
-                        }
-                    }
+                    //console.log(this.response)
+                    const { error, data } = JSON.parse(this.response)
+                    if (error) return handleError(error)
+                    else handlerData(data)
                 }
             }
             xmlHttp.open('GET', 'http://localhost:5000/api/blog')
             xmlHttp.setRequestHeader('Content-Type', 'application/json')
             xmlHttp.send()
 
+            //Function for edit button
+            function editBlog(blog) {
+                window.location.href = decodeURI('http://localhost:5000/editblog?id=' + blog.blogID)
+            }
+
+            //Function for Delete button
+            function deleteBlog(blog) {
+                const blogid = blog.blogID
+                const xmlHttp = new XMLHttpRequest()
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.status === 200 && xmlHttp.readyState == 4) {
+                        console.log(this.response)
+                        const { error, success, message } = JSON.parse(this.response)
+
+                        if (error) alert(JSON.stringify(error))
+                        else {
+                            alert(message)
+                            window.location.href = '/'
+                        }
+                    }
+                }
+                xmlHttp.open('POST', 'http://localhost:5000/api/deleteblog', true)
+                xmlHttp.setRequestHeader('Content-Type', 'application/json')
+                xmlHttp.send(JSON.stringify({ blogid }))
+            }
+
+            //Function for Logout
             function logout() {
                 console.log('Logout Here.')
                 const xmlHttp = new XMLHttpRequest()

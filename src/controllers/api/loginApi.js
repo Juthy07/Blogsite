@@ -21,7 +21,6 @@ async function logging(req, res) {
                     message: `User Logged In.`,
                 })
             }
-            throw new Error('User not valid')
         } catch (e) {
             console.log(e)
             res.json({

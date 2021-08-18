@@ -1,5 +1,6 @@
 const session = require('express-session')
-const blog = require('../../data/users')
+const { includes } = require('../../data/users')
+
 const { getPrisma } = require('../../util/util')
 
 const prisma = getPrisma()
@@ -9,28 +10,33 @@ async function getBlog(req, res) {
 
     const count = await prisma.blog.count()
     const blogData = await prisma.blog.findMany()
+    const blogDataWithUser = []
+    for (let i = 0; i < blogData.length; i++) {
+        const user = await prisma.user.findFirst({
+            where: {
+                userID: blogData[i].userFK,
+            },
+        })
+        const newBlogEntry = Object.assign({ username: user.username }, blogData[i])
+        blogDataWithUser.push(newBlogEntry)
+    }
     const currentUser = await prisma.user.findFirst({
+        select: {
+            userID: true,
+            username: true,
+        },
         where: {
             userID: req.session.user.userID,
         },
     })
 
-    // const i = 1
-    // const user = await prisma.blog.findFirst({
-    //     where: {
-    //         blogID: i,
-    //     },
-    // })
-
-    //console.log(user)
-
     return res.json({
         success: true,
-        data: blogData,
-        count: count,
-
-        currentUser: currentUser.userID,
-        currentUserName: currentUser.username,
+        data: {
+            blog: blogDataWithUser,
+            count,
+            user: currentUser,
+        },
     })
 }
 module.exports = getBlog

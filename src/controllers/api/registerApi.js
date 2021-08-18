@@ -8,6 +8,7 @@ async function registration(req, res) {
     //rep, res = HTTP request and response arguments to the middleware function, called "req" & "res" by convention.
     const body = req.body //The req.body property contains key-value pairs of data submitted in the request body.
     const { email, username, password, repassword } = body
+    //console.log('email: ' + email)
     const error = {}
 
     if (
@@ -36,7 +37,7 @@ async function registration(req, res) {
 }
 
 async function registerUser({ email, username, password }) {
-    debugger
+    //debugger
     const hasRegisteredUser = await prisma.user.findFirst({ where: { email } })
     if (hasRegisteredUser) {
         res.json({ error: 'User already exists.' })
