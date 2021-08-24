@@ -27,8 +27,8 @@ const webRouter = (app) => {
     app.get(webRoute.LOGIN_PAGE_ROUTE, loginPage)
     app.get(webRoute.REGISTER_PAGE_ROUTE, registerPage)
     app.get(webRoute.ERROR_PAGE_ROUTE, errorPage)
-    app.get(webRoute.CREATE_BLOG_ROUTE, createBlogPage)
-    app.get(webRoute.EDIT_BLOG_ROUTE, editBlogPage)
+    app.get(webRoute.CREATE_BLOG_ROUTE, authMiddlerware, createBlogPage)
+    app.get(webRoute.EDIT_BLOG_ROUTE, authMiddlerware, editBlogPage)
 }
 
 const defaultRouter = (app) => {

@@ -19,16 +19,16 @@ async function logout(req, res) {
             // message: 'Error!',
         })
     }
-}
 
-function deleteSession(sid) {
-    // console.log('Session id here!!! : ' + sid)
-
-    return prisma.session.delete({
-        where: {
-            sid,
-        },
-    })
+    function deleteSession(id) {
+        // console.log('Session id here!!! : ' + sid)
+        // debugger
+        return prisma.sessionWhiteList.delete({
+            where: {
+                sid: id,
+            },
+        })
+    }
 }
 
 module.exports = logout

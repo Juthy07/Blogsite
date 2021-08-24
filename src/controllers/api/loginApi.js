@@ -15,6 +15,8 @@ async function logging(req, res) {
             const user = await userLogin({ email, username, password })
             debugger
             if (user) {
+                addToWhitelist(req.session.id)
+
                 req.session.user = user
                 res.json({
                     success: true,
@@ -42,6 +44,15 @@ async function logging(req, res) {
         })
 
         return validUser
+    }
+
+    async function addToWhitelist(sid) {
+        const sess = await prisma.sessionWhiteList.create({
+            data: {
+                sid,
+            },
+        })
+        debugger
     }
 }
 

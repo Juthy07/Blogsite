@@ -26,6 +26,7 @@ model Session {
   sid    String   @id @db.VarChar
   sess   Json     @db.Json
   expire DateTime @db.Timestamp(6)
+ 
   
 
   @@index([expire], name: "IDX_session_expire")
@@ -40,4 +41,10 @@ model Blog {
   datecreated DateTime @db.Date
   User        User     @relation(fields: [userFK], references: [userID])
    @@map(name: "blog")
+}
+
+model SessionWhiteList {
+  id          Int       @id @default(autoincrement())
+  sid   String    @db.VarChar @unique
+  
 }

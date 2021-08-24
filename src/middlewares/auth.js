@@ -9,10 +9,12 @@ async function validateUserAuth(req, res, next) {
     //console.log('Session!: ' + sessionId)
     if (sessionID) {
         const session = await isSessionValid(sessionID)
+        debugger
         if (session) {
             return next()
         }
     }
+    debugger
     console.log('Invalid Session.')
     return res.redirect('/login')
 }
@@ -20,7 +22,7 @@ async function validateUserAuth(req, res, next) {
 function isSessionValid(sid) {
     // check if the session id exists.
     // if not throw error
-    return prisma.session.findFirst({
+    return prisma.sessionWhiteList.findFirst({
         where: { sid },
     })
 }

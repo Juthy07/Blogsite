@@ -20,6 +20,7 @@ async function getBlog(req, res) {
         const newBlogEntry = Object.assign({ username: user.username }, blogData[i])
         blogDataWithUser.push(newBlogEntry)
     }
+
     const currentUser = await prisma.user.findFirst({
         select: {
             userID: true,
