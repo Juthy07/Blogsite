@@ -5,11 +5,16 @@ const { getPrisma } = require('../../util/util')
 const prisma = getPrisma()
 
 async function createBlog(req, res) {
+    const dd = new Date().getDate()
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const mm = month[new Date().getMonth()]
+    const yyyy = new Date().getFullYear()
+
+    const datecreated = dd + ' - ' + mm + ' - ' + yyyy
+
     const body = req.body
     const { blogtitle, blogcontent } = body
     console.log(blogtitle)
-    const datecreated = new Date().toISOString()
-    console.log('Date : ' + datecreated)
 
     const currentUser = await prisma.user.findFirst({
         where: {
@@ -46,6 +51,7 @@ async function addBlog({ userID, blogtitle, blogcontent, datecreated }) {
             blogtitle,
             blogcontent,
             datecreated,
+            datemodified: datecreated,
             userFK: userRecord.userID,
         },
         include: { User: true },

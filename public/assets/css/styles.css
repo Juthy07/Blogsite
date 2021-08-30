@@ -1,0 +1,60 @@
+/* Common CSS for all pages */
+
+#mainHeader {
+    background-image: linear-gradient(180deg, #822faf, #8b057e);
+}
+#div-1 {
+    background-image: linear-gradient(115deg, rgba(241, 148, 210, 0.87), rgba(238, 27, 150, 0.788)),
+        url(https://c0.wallpaperflare.com/preview/506/358/401/camera-classic-coffee-cup-and-saucer.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+#div-2 {
+    background-color: #a8159a;
+}
+
+/* CSS for Login Page */
+#loginBtn {
+    background-color: #e8428a;
+}
+#loginBtn:hover {
+    background-color: #ee79ae;
+    color: black;
+}
+#register-redirect:hover {
+    color: #f87db5;
+}
+
+/* CSS for Register Page */
+#registerBtn {
+    background-color: #e8428a;
+}
+#registerBtn:hover {
+    background-color: #ee79ae;
+    color: black;
+}
+
+/* CSS for Home Page */
+#main-blog-div {
+    background-image: linear-gradient(115deg, #e46ed8, #bb1eab);
+}
+#blog-title {
+    color: #4a015c;
+}
+#blog-content {
+    color: #050505;
+}
+#blog-main-text {
+    color: rgb(117, 3, 112);
+}
+#createBtn {
+    background-color: #fa60a6;
+}
+#div-1-body {
+    background-image: linear-gradient(115deg, #df7591, #f03385);
+}

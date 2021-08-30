@@ -7,27 +7,29 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title></title>
+        <title>Home Page</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href='/styles' rel='stylesheet'>
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+        </style>
     </head>
-    <body class="bg-yellow-50">
+    <body id="div-1-body">
         <!--[if lt IE 7]>
             <p class="browsehappy">
                 You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to
                 improve your experience.
             </p>
         <![endif]-->
-        <div id="header" class="flex flex-row">
+        <div class="flex flex-row">
             <div
+                id="mainHeader"
                 class="
                     w-max
                     max-h-80
-                    bg-yellow-400
                     p-4
                     pl-6
-                    text-4xl
+                    text-5xl text-white
                     font-bold font-serif
                     flex flex-row flex-grow
                     justify-between
@@ -39,7 +41,7 @@
                     class="
                         text-base
                         flex
-                        text-center text-yellow-700
+                        text-center text-white
                         justify-center
                         mt-6
                         text-2xl
@@ -51,10 +53,15 @@
                 >
                 </span>
                 <div class="text-base flex items-center gap-2">
-                    <button class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl" type="button">
+                    <button
+                        id="createBtn"
+                        class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl"
+                        type="button"
+                    >
                         <a href="/createBlog">Create Blog</a>
                     </button>
                     <button
+                        id="logoutBtn"
                         class="p-2 text-center bg-red-500 text-white hover:shadow-xl"
                         type="button"
                         onclick="logout()"
@@ -83,9 +90,11 @@
                 const { blog, user } = data
                 //console.log(user)
                 console.log(blog)
+
                 updateUserName(user.username)
                 for (let i = 0; i < blog.length; i++) {
                     blogMaker(blog[i], user.userID)
+                    // debugger
                 }
             }
 
@@ -93,52 +102,61 @@
             function blogMaker(blog, currentUserID) {
                 //Main div of Blog
                 const main = document.createElement('div')
-                main.className = 'w-8/12 p-8 border shadow-md bg-yellow-200 font-serif leading-8 break-words'
+                main.id = 'main-blog-div'
+                main.className = 'w-8/12 p-8 mb-4 shadow-2xl font-serif leading-8 break-words rounded-2xl'
 
                 //Blog title
                 const title = document.createElement('div')
                 title.innerHTML = blog.blogtitle
-                title.className = 'flex justify-center text-yellow-600 text-3xl font-semibold italic'
+                title.className = 'flex justify-center text-4xl font-semibold italic'
+                title.id = 'blog-title'
 
                 //Blog content
                 const content = document.createElement('div')
                 content.innerHTML = blog.blogcontent
-                content.className = 'flex flex-row gap-3 flex justify-center pt-4 font-medium text-lg'
+                content.className = 'flex flex-row gap-3 flex justify-center pt-4 font-medium text-xl leading-8'
+                content.id = 'blog-content'
 
                 //Blog footer
                 const footer = document.createElement('div')
-                footer.className = '-mb-5 -ml-4 flex flex-row justify-between flex items-center'
+                footer.className = '-mb-5 -ml-4 flex flex-row justify-between flex items-center flex-row'
 
-                //Blog Detail
-                const detail = document.createElement('div')
-                detail.className = 'mb-3 mt-3 ml-5 justify-center flex-col pb-0 text-yellow-700 italic'
+                //Blog Detail Right Side
+                const rightDetail = document.createElement('div')
+                rightDetail.className = 'mb-3 mt-3 ml-5 justify-center flex-col pb-0 text-yellow-700 italic'
+
+                //Blog Details Left Side
+                const leftDetail = document.createElement('div')
+                leftDetail.className =
+                    'mb-3 mt-3 ml-5 justify-center flex-col pb-0 text-yellow-700 italic font-bold text-xl'
 
                 //Blog created by
                 const createdBy = document.createElement('div')
                 createdBy.className = '-mb-2'
+                createdBy.id = 'blog-main-text'
 
-                //Blog date created
-                const date = document.createElement('div')
+                //Blog date created and modified
+                const datecreated = document.createElement('div')
+                datecreated.id = 'blog-main-text'
+                const datemodified = document.createElement('div')
+                datemodified.id = 'blog-main-text'
 
-                Blogdate = blog.datecreated.split('-')
-
-                const year = Blogdate[0]
-                const month = Blogdate[1]
-                const day = Blogdate[2].slice(0, 2)
-                const finaldate = day + ' - ' + month + ' - ' + year
-
-                date.innerHTML = 'Date created : ' + finaldate
+                datecreated.innerHTML = 'Date created : ' + blog.datecreated
+                // datecreated.className = '-mb-2'
+                datemodified.innerHTML = 'Last modified : ' + blog.datemodified
+                datemodified.className = '-mb-2'
 
                 createdBy.innerHTML = 'By : ' + blog.username
 
                 //Button Div
                 const buttonDiv = document.createElement('div')
+                buttonDiv.className = 'mt-2 -mb-2'
 
                 //Edit button
                 const editButton = document.createElement('button')
                 editButton.type = 'button'
                 editButton.className =
-                    'p-2 text-center text-xs bg-green-500 text-white hover:shadow-xl w-50 px-4 rounded-md text-base mr-2 hover:bg-green-700'
+                    'p-2 text-center text-xs bg-green-500 text-white hover:shadow-xl w-20 px-4 rounded-md text-base mr-3 hover:bg-green-700'
                 editButton.innerHTML = 'Edit'
                 editButton.onclick = function () {
                     editBlog(blog)
@@ -148,28 +166,29 @@
                 const deleteButton = document.createElement('button')
                 deleteButton.type = 'button'
                 deleteButton.className =
-                    'p-2 text-center text-xs bg-red-500 text-white hover:shadow-xl rounded-md text-base hover:bg-red-700'
+                    'p-2 text-center text-xs bg-red-500 w-20 text-white hover:shadow-xl rounded-md text-base hover:bg-red-700'
                 deleteButton.innerHTML = 'Delete'
                 deleteButton.onclick = function () {
                     deleteBlog(blog)
                 }
 
-                //Button appearing and disappering
-                if (currentUserID == blog.userFK) {
-                    buttonDiv.appendChild(editButton)
-                    buttonDiv.appendChild(deleteButton)
-                }
+                leftDetail.appendChild(createdBy)
+                rightDetail.appendChild(datemodified)
+                rightDetail.appendChild(datecreated)
 
-                detail.appendChild(createdBy)
-                detail.appendChild(date)
-
-                footer.appendChild(detail)
-                footer.appendChild(buttonDiv)
+                footer.appendChild(leftDetail)
+                footer.appendChild(rightDetail)
 
                 main.appendChild(title)
                 main.appendChild(content)
                 main.appendChild(footer)
 
+                //Button appearing and disappering
+                if (currentUserID == blog.userFK) {
+                    main.appendChild(buttonDiv)
+                    buttonDiv.appendChild(editButton)
+                    buttonDiv.appendChild(deleteButton)
+                }
                 document.getElementById('blog').appendChild(main)
             }
 

@@ -4,14 +4,15 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href='/styles' rel='stylesheet'>
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
         <title>Login</title>
-    </head>
+      
     <body>
-        <div class="w-screen max-h-80 bg-yellow-400 p-4 pl-6 text-4xl font-bold font-serif">Blogsite</div>
-        <div class="w-screen h-screen flex justify-center items-center font-serif bg-yellow-100">
-            <div class="p-8 border shadow-md bg-yellow-50">
-                <h1 class="text-2xl pb-2 border-b mb-5">Login</h1>
+        <div id="mainHeader" class="w-screen max-h-80 p-6 pl-6 text-5xl font-bold font-serif text-white">Blogsite</div>
+        <div id="div-1"class="w-screen h-screen flex justify-center items-center font-serif">
+            <div id="div-2"class="p-10 shadow-2xl -mt-20 text-white rounded-xl">
+                <h1 class="text-3xl pb-2 border-b mb-5">Login</h1>
                 <div class="">
                     <form>
                         <div class="p-2">
@@ -43,15 +44,16 @@
                         </div>
                         <div class="p-2">
                             <button
+                            id="loginBtn"
                                 type="button"
-                                class="w-full border p-2 shadow-md bg-yellow-400 text-xl hover:shadow-xl"
+                                class="w-full  p-2 shadow-md text-xl hover:shadow-xl rounded-3xl"
                                 onclick="login()"
                             >
                                 Login
                             </button>
                         </div>
-                        <div class="p-2 pl-3">
-                            Not a user? <a class="hover:text-yellow-400 shadow-xl" href="/register">Register here!</a>
+                        <div class="p-2 pl-6 text-lg">
+                            Not a user? <a id = 'register-redirect' class="shadow-xl" href="/register">Register here!</a>
                         </div>
                     </form>
                 </div>
@@ -70,7 +72,7 @@
 
                         if (error) alert(JSON.stringify(error))
                         else {
-                            alert(message)
+                            window.alert(message)
                             window.location.href = '/'
                         }
                     }
@@ -79,6 +81,7 @@
                 xmlHttp.setRequestHeader('Content-Type', 'application/json')
                 xmlHttp.send(JSON.stringify({ email, username, password }))
             }
+
         </script>
     </body>
 </html>

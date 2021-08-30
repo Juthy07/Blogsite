@@ -17,6 +17,10 @@ const EDIT_BLOG_ROUTE = '/editblog'
 
 const ERROR_PAGE_ROUTE = '/error'
 
+// CSS routes
+const STYLE_PAGE = '/styles'
+const IMAGES = '/image'
+
 module.exports = {
     apiRoute: {
         LOGIN_API_ROUTE,
@@ -35,5 +39,9 @@ module.exports = {
         ERROR_PAGE_ROUTE,
         CREATE_BLOG_ROUTE,
         EDIT_BLOG_ROUTE,
+    },
+    styleRoute: {
+        STYLE_PAGE,
+        IMAGES,
     },
 }

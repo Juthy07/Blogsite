@@ -38,7 +38,8 @@ model Blog {
   userFK      Int      @db.Integer
   blogtitle   String   @db.VarChar
   blogcontent String   @db.VarChar
-  datecreated DateTime @db.Date
+  datecreated String @db.VarChar
+  datemodified String  @db.VarChar
   User        User     @relation(fields: [userFK], references: [userID])
    @@map(name: "blog")
 }
