@@ -10,11 +10,12 @@
         <title>Home Page</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href='/styles' rel='stylesheet'>
+        <link href='/styles/common.css' rel='stylesheet'>
+        <link href="/styles/index.css" rel="stylesheet">
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
         </style>
     </head>
-    <body id="div-1-body">
+    <body id="div-1">
         <!--[if lt IE 7]>
             <p class="browsehappy">
                 You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to
@@ -44,10 +45,11 @@
                         text-center text-white
                         justify-center
                         mt-6
-                        text-2xl
+                        text-3xl
                         font-serif
                         -mb-3
                         font-semibold
+                        italic
                     "
                     id="username"
                 >
@@ -55,14 +57,14 @@
                 <div class="text-base flex items-center gap-2">
                     <button
                         id="createBtn"
-                        class="p-2 text-center bg-yellow-500 text-white hover:shadow-xl"
+                        class="p-2 text-center text-white hover:shadow-xl text-xl  rounded-md"
                         type="button"
                     >
                         <a href="/createBlog">Create Blog</a>
                     </button>
                     <button
                         id="logoutBtn"
-                        class="p-2 text-center bg-red-500 text-white hover:shadow-xl"
+                        class="p-2 text-center  text-white hover:shadow-xl text-xl  rounded-md"
                         type="button"
                         onclick="logout()"
                     >
@@ -155,8 +157,9 @@
                 //Edit button
                 const editButton = document.createElement('button')
                 editButton.type = 'button'
+                editButton.id = 'editBtn'
                 editButton.className =
-                    'p-2 text-center text-xs bg-green-500 text-white hover:shadow-xl w-20 px-4 rounded-md text-base mr-3 hover:bg-green-700'
+                    'p-2 text-center text-xs  text-white hover:shadow-xl w-20 px-4 rounded-md text-base mr-3 '
                 editButton.innerHTML = 'Edit'
                 editButton.onclick = function () {
                     editBlog(blog)
@@ -165,8 +168,9 @@
                 //Delete button
                 const deleteButton = document.createElement('button')
                 deleteButton.type = 'button'
+                deleteButton.id = 'deleteBtn'
                 deleteButton.className =
-                    'p-2 text-center text-xs bg-red-500 w-20 text-white hover:shadow-xl rounded-md text-base hover:bg-red-700'
+                    'p-2 text-center text-xs  w-20 text-white hover:shadow-xl rounded-md text-base'
                 deleteButton.innerHTML = 'Delete'
                 deleteButton.onclick = function () {
                     deleteBlog(blog)

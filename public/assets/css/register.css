@@ -1,0 +1,8 @@
+/* CSS for Register Page */
+#registerBtn {
+    background-color: #e8428a;
+}
+#registerBtn:hover {
+    background-color: #ee79ae;
+    color: black;
+}

@@ -8,8 +8,8 @@ const {
     deleteBlogApi,
 } = require('../controllers/api')
 const { homePage, registerPage, loginPage, errorPage, createBlogPage, editBlogPage } = require('../controllers/web')
-const { stylePage, images } = require('../controllers/style')
-const { apiRoute, webRoute, styleRoute } = require('./routes')
+const { stylePage, images } = require('../controllers/assets')
+const { apiRoute, webRoute, assetsRoute } = require('./routes')
 const authMiddlerware = require('../middlewares/auth')
 const { getTemplate, getStyles, getImage } = require('../util/util')
 
@@ -32,9 +32,9 @@ const webRouter = (app) => {
     app.get(webRoute.EDIT_BLOG_ROUTE, authMiddlerware, editBlogPage)
 }
 
-const styleRouter = (app) => {
-    app.get(styleRoute.STYLE_PAGE, stylePage)
-    app.get(styleRoute.IMAGES, images)
+const assetsRouter = (app) => {
+    app.get(assetsRoute.STYLE_PAGE, stylePage)
+    app.get(assetsRoute.IMAGES, images)
 }
 
 const defaultRouter = (app) => {
@@ -47,7 +47,7 @@ const defaultRouter = (app) => {
 const appRouter = (app) => {
     apiRouter(app)
     webRouter(app)
-    styleRouter(app)
+    assetsRouter(app)
     defaultRouter(app)
 }
 

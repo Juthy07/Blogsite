@@ -1,0 +1,19 @@
+#textDiv {
+    background-color: #9f44af;
+    box-sizing: content-box;
+}
+#saveBtn {
+    background-color: #4e9c3f;
+}
+#saveBtn:hover {
+    background-color: #177e03;
+}
+#cancelBtn {
+    background-color: #d61c1b;
+}
+#cancelBtn:hover {
+    background-color: #b10202;
+}
+#blogcontent {
+    min-height: auto;
+}

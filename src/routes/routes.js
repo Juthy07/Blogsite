@@ -18,8 +18,8 @@ const EDIT_BLOG_ROUTE = '/editblog'
 const ERROR_PAGE_ROUTE = '/error'
 
 // CSS routes
-const STYLE_PAGE = '/styles'
-const IMAGES = '/image'
+const STYLE_PAGE = new RegExp('/styles/.*.css$')
+const IMAGES = new RegExp('/image/.*.(png|jpg|jpeg|svg)$')
 
 module.exports = {
     apiRoute: {
@@ -40,7 +40,7 @@ module.exports = {
         CREATE_BLOG_ROUTE,
         EDIT_BLOG_ROUTE,
     },
-    styleRoute: {
+    assetsRoute: {
         STYLE_PAGE,
         IMAGES,
     },

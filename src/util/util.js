@@ -67,14 +67,14 @@ function getTemplate(templateName) {
     return fs.readFileSync(filePath, 'utf-8')
 }
 
-function getStyles(styleName) {
-    const filePath = path.join(path.resolve('public/assets/css/'), styleName)
+function getStyles(fileName) {
+    const filePath = path.join(path.resolve('public/assets/css/'), fileName)
     return fs.readFileSync(filePath, 'utf-8')
 }
 
 function getImage(imageName) {
     const filePath = path.join(path.resolve('public/assets/image/'), imageName)
-    return fs.readFileSync(filePath, 'utf-8')
+    return fs.readFileSync(filePath)
 }
 
 function getPrisma() {

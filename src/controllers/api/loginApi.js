@@ -13,7 +13,7 @@ async function logging(req, res) {
     if (validEmail(email, error) && validUsername(username, error) && validPassword(password, error)) {
         try {
             const user = await userLogin({ email, username, password })
-            debugger
+            // debugger
             if (user) {
                 addToWhitelist(req.session.id)
 

@@ -1,0 +1,11 @@
+/* CSS for Login Page */
+#loginBtn {
+    background-color: #e8428a;
+}
+#loginBtn:hover {
+    background-color: #ee79ae;
+    color: black;
+}
+#register-redirect:hover {
+    color: #f87db5;
+}

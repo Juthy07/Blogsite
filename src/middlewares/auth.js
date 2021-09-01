@@ -9,7 +9,7 @@ async function validateUserAuth(req, res, next) {
     //console.log('Session!: ' + sessionId)
     if (sessionID) {
         const session = await isSessionValid(sessionID)
-        debugger
+        // debugger
         if (session) {
             return next()
         }
