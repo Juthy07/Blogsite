@@ -15,10 +15,10 @@ input {
     background-position: center;
     background-attachment: fixed;
 }
-img {
+/* img {
     max-width: 100%;
     height: auto;
-}
+} */
 #div-2 {
     background-color: #a8159a;
 }
