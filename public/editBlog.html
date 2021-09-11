@@ -16,11 +16,11 @@
     </head>
     <body>
         <div id="mainHeader" class="w-screen max-h-80 p-6 pl-6 text-5xl font-bold font-serif text-white">Blogsite</div>
-        <div id="div-1" class="w-screen h-screen flex justify-center items-center font-serif bg-yellow-100 flex-col">
+        <div id="div-1" class="w-screen h-screen flex justify-center items-center font-serif flex-col">
             <div id="textDiv" class="p-8 shadow-md w-3/5">
                 <div class="flex flex-col text-white text-lg">
                     Title:
-                    <textarea class="text-black text-center mb-5 pt-5 text-3xl" id="blogtitle"></textarea>
+                    <textarea class="text-black text-center text-3xl mb-2" id="blogtitle"></textarea>
                     Content:
                     <textarea class="border  text-black pb-40 p-3" id="blogcontent"></textarea>
                 </div>
@@ -38,6 +38,7 @@
                     id="cancelBtn"
                     type="button"
                     class="w-full p-2 px-4 rounded-md shadow-md bg-red-600 text-xl text-white hover:shadow-xl"
+                    onclick="cancel()"
                 >
                     Cancel
                 </button>
@@ -50,6 +51,10 @@
 
             function handleError(error) {
                 alert('Something went wrong.\n Error:', error)
+            }
+
+            function cancel() {
+                window.location.href = '/'
             }
 
             function handleData(data) {
