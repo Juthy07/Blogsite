@@ -6,7 +6,7 @@ function stylePage(req, res) {
         var fileName = path.basename(req.path)
         const file = getStyles(fileName)
         res.setHeader('Content-Type', 'text/css')
-        debugger
+        //debugger
         res.end(file)
     } catch (e) {
         debugger

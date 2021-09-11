@@ -1,5 +1,5 @@
 const session = require('express-session')
-const { includes } = require('../../data/users')
+const { includes, splice } = require('../../data/users')
 
 const { getPrisma } = require('../../util/util')
 
@@ -19,6 +19,13 @@ async function getBlog(req, res) {
         })
         const newBlogEntry = Object.assign({ username: user.username }, blogData[i])
         blogDataWithUser.push(newBlogEntry)
+        blogDataWithUser.sort(function (a, b) {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.dateforsorting) - new Date(a.dateforsorting)
+        })
+
+        debugger
     }
 
     const currentUser = await prisma.user.findFirst({
